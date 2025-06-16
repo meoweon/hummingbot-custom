@@ -1,0 +1,78 @@
+你知道我这个叫灵活网格的原因是什么吗，区别于传统网格的是什么？之所以叫灵活 网格是因为每一层开仓和止盈的点位都不是提前固定好的而是根据市场行情动态调整的。重要的是开仓的时机而不是价格。以做多举例，比如我第一层因为没有上一层所以按照开仓比例和当前价格计算出开仓激活价，当价格下跌达到小于开仓激活价，这时开始判断随时准备下开仓单，持续记录最低价，直到不创新低开始反弹判断反弹幅度是否达到反弹比例要求，达到了就触发开仓。真正开仓后开仓价格才被确定，这时才能根据上一层的真实开仓价格和当前准备开仓层的开仓比例去计算当前开仓层的开仓激活价。最后已开仓层判断是否可以止盈，具体判断逻辑流程是，根据该层实际开仓价和止盈比例计算出止盈激活价，当价格上涨高于止盈激活价后，开始判断随时准备下止盈平仓单，持续记录最高价，当价格不再创新高开始回落根据止盈回弹比例开始判断，回落幅度满足止盈回弹比例要求这时候就止盈。做空逻辑一样但是相反一下就可以。网格策略是浮亏加仓所以除了最后一层可能盈利外其余层肯定是浮亏，只有前一层先开仓后一层才能开，只有后一层先平仓前一层才能平仓。第一层的基准价格就是开始的市场价格，除第一层以外其他层的基准价格就是上一层的实际真实开仓价格，如果上一层没有开那就是没有。你理解了吗？
+而且它还有一个灵活体现在每一层的开仓比例，开仓回弹比例，止盈比例，止盈回弹比例，每一层的仓位占比等参数，都应该支持单独配置。
+
+根据上一层的is_held_position和current_state触发计算使用上一层的last_open_price和本层的open_ratio计算出本层的active_op_price，当current_price达到active_op_price时is_op_active=true，这时开始记录highest_price或者lowest_price，根据本层open_rebound_ratio和highest_price或者lowest_price计算出trigger_op_price，当current_price触发trigger_op_price则创建PE进行下单操作，开仓成功is_op_active=false，is_held_position=true，填充last_open_price，然后就可以计算下一层的active_op_price了，对了过程中别忘了更新上一层本层和下一层对应的状态
+
+注意初始化只是初始化网格层级，不应该初始化PE执行器，PE执行器只有在检查开仓触发方法返回true时才能触发。PE执行器和网格层级不是一回事，网格层级同一时间只能有一个PE执行器管理一个仓位，但是网格层级生命周期里可以有过很多个PE仓位，理解吧。
+
+class FlexibleGridLevelStates(Enum):
+    """灵活网格级别状态
+
+    开仓流程：上一层状态：OPEN_ORDER_FILLED -> WAITING_TP_ACTIVE == 当前层状态：WAITING_PREV_OPEN -> WAITING_OP_ACTIVE -> WAITING_OP_REBOUND -> OPEN_ORDER_PLACED -> OPEN_ORDER_FILLED -> WAITING_TP_ACTIVE == 上一层状态：WAITING_TP_ACTIVE -> WAITING_NEXT_CLOSE == 下一层状态：WAITING_PREV_OPEN -> WAITING_OP_ACTIVE
+    止盈流程：下一层状态：WAITING_TP_ACTIVE -> WAITING_TP_REBOUND -> CLOSE_ORDER_PLACED -> CLOSE_ORDER_FILLED == 当前层状态：WAITING_NEXT_CLOSE -> WAITING_TP_ACTIVE -> WAITING_TP_REBOUND -> CLOSE_ORDER_PLACED -> CLOSE_ORDER_FILLED == 上一层状态：WAITING_NEXT_CLOSE -> WAITING_TP_ACTIVE
+    """
+
+    WAITING_PREV_OPEN = "waiting_prev_open"  # 等待前一级别开仓
+    WAITING_OP_ACTIVE = "waiting_op_active"  # 等待开仓激活（价格达到激活价）
+    WAITING_OP_REBOUND = "waiting_op_rebound"  # 等待开仓反弹（价格从最低点反弹）
+    OPEN_ORDER_PLACED = "open_order_placed"  # 开仓订单已下
+    OPEN_ORDER_FILLED = "open_order_filled"  # 开仓订单已成交
+    WAITING_TP_ACTIVE = "waiting_tp_active"  # 等待止盈激活（价格达到止盈激活价）
+    WAITING_TP_REBOUND = "waiting_tp_rebound"  # 等待止盈回落（价格从最高点回落）
+    CLOSE_ORDER_PLACED = "close_order_placed"  # 平仓订单已下
+    CLOSE_ORDER_FILLED = "close_order_filled"  # 平仓订单已成交
+    WAITING_NEXT_CLOSE = "waiting_next_close"  # 等待后续级别平仓（确保后续级别先平仓）
+    COMPLETE = "complete"  # 完成状态
+    FAILED = "failed"  # 失败状态
+
+
+valid_transitions = {
+    # 开仓流程
+    FlexibleGridLevelStates.WAITING_PREV_OPEN: [
+        FlexibleGridLevelStates.WAITING_OP_ACTIVE,  # 前一层级开仓完成后
+        FlexibleGridLevelStates.FAILED,  # 失败状态
+    ],
+    FlexibleGridLevelStates.WAITING_OP_ACTIVE: [
+        FlexibleGridLevelStates.WAITING_OP_REBOUND,  # 价格达到激活价
+        FlexibleGridLevelStates.FAILED,
+    ],
+    FlexibleGridLevelStates.WAITING_OP_REBOUND: [
+        FlexibleGridLevelStates.OPEN_ORDER_PLACED,  # 价格反弹达到条件
+        FlexibleGridLevelStates.FAILED,
+    ],
+    FlexibleGridLevelStates.OPEN_ORDER_PLACED: [
+        FlexibleGridLevelStates.OPEN_ORDER_FILLED,  # 订单成交
+        FlexibleGridLevelStates.WAITING_OP_REBOUND,  # 订单取消或失败
+        FlexibleGridLevelStates.FAILED,
+    ],
+    FlexibleGridLevelStates.OPEN_ORDER_FILLED: [
+        FlexibleGridLevelStates.WAITING_TP_ACTIVE,  # 开始等待止盈
+        FlexibleGridLevelStates.FAILED,
+    ],
+    # 止盈流程
+    FlexibleGridLevelStates.WAITING_TP_ACTIVE: [
+        FlexibleGridLevelStates.WAITING_TP_REBOUND,  # 价格达到止盈激活价
+        FlexibleGridLevelStates.WAITING_NEXT_CLOSE,  # 等待后续级别平仓
+        FlexibleGridLevelStates.FAILED,
+    ],
+    FlexibleGridLevelStates.WAITING_TP_REBOUND: [
+        FlexibleGridLevelStates.CLOSE_ORDER_PLACED,  # 价格回落达到条件
+        FlexibleGridLevelStates.FAILED,
+    ],
+    FlexibleGridLevelStates.CLOSE_ORDER_PLACED: [
+        FlexibleGridLevelStates.CLOSE_ORDER_FILLED,  # 订单成交
+        FlexibleGridLevelStates.WAITING_TP_REBOUND,  # 订单取消或失败
+        FlexibleGridLevelStates.FAILED,
+    ],
+    FlexibleGridLevelStates.CLOSE_ORDER_FILLED: [
+        FlexibleGridLevelStates.COMPLETE,  # 完成交易
+        FlexibleGridLevelStates.FAILED,
+    ],
+    FlexibleGridLevelStates.WAITING_NEXT_CLOSE: [
+        FlexibleGridLevelStates.WAITING_TP_ACTIVE,  # 后续级别已平仓
+        FlexibleGridLevelStates.FAILED,
+    ],
+    # 终止状态
+    FlexibleGridLevelStates.COMPLETE: [FlexibleGridLevelStates.WAITING_PREV_OPEN],
+    FlexibleGridLevelStates.FAILED: [FlexibleGridLevelStates.WAITING_PREV_OPEN],  # 失败后可以重新开始
+}

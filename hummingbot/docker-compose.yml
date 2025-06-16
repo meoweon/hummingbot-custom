@@ -1,0 +1,54 @@
+services:
+  hummingbot:
+    container_name: hummingbot
+    image: hummingbot/hummingbot:latest
+    build:
+      # Uncomment this and comment image if you want to build it locally
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./conf:/home/hummingbot/conf
+      - ./conf/connectors:/home/hummingbot/conf/connectors
+      - ./conf/strategies:/home/hummingbot/conf/strategies
+      - ./conf/controllers:/home/hummingbot/conf/controllers
+      - ./conf/scripts:/home/hummingbot/conf/scripts
+      - ./logs:/home/hummingbot/logs
+      - ./data:/home/hummingbot/data
+      - ./certs:/home/hummingbot/certs
+      - ./scripts:/home/hummingbot/scripts
+      - ./controllers:/home/hummingbot/controllers
+      - ./test:/home/hummingbot/test
+      - ./hummingbot/strategy_v2/executors/flexible_grid_executor:/home/hummingbot/hummingbot/strategy_v2/executors/flexible_grid_executor
+      - ./hummingbot/strategy_v2/executors/data_types.py:/home/hummingbot/hummingbot/strategy_v2/executors/data_types.py
+      - ./hummingbot/strategy_v2/executors/executor_orchestrator.py:/home/hummingbot/hummingbot/strategy_v2/executors/executor_orchestrator.py
+      - ./hummingbot/strategy_v2/models/executors_info.py:/home/hummingbot/hummingbot/strategy_v2/models/executors_info.py
+      - ./hummingbot/connector/derivative/okx_perpetual/okx_perpetual_derivative.py:/home/hummingbot/hummingbot/connector/derivative/okx_perpetual/okx_perpetual_derivative.py
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+    tty: true
+    stdin_open: true
+    network_mode: host
+    environment:
+      - TZ=Asia/Shanghai
+  #    environment:
+  #      - CONFIG_PASSWORD=a
+  #      - CONFIG_FILE_NAME=v2_with_controllers.py
+  #      - SCRIPT_CONFIG=conf_v2_with_controllers.yml
+
+  # gateway:
+  #  restart: always
+  #  container_name: gateway
+  #  image: hummingbot/gateway:latest
+  #  ports:
+  #    - "15888:15888"
+  #    - "8080:8080"
+  #  volumes:
+  #    - "./gateway_files/conf:/home/gateway/conf"
+  #    - "./gateway_files/logs:/home/gateway/logs"
+  #    - "./gateway_files/db:/home/gateway/db"
+  #    - "./certs:/home/gateway/certs"
+  #  environment:
+  #    - GATEWAY_PASSPHRASE=a

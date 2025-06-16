@@ -1,0 +1,3 @@
+# English translations
+
+translations = {}

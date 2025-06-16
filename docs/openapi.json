@@ -1,0 +1,2676 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "FastAPI",
+        "version": "0.1.0"
+    },
+    "paths": {
+        "/is-docker-running": {
+            "get": {
+                "tags": [
+                    "Docker Management"
+                ],
+                "summary": "Is Docker Running",
+                "operationId": "is_docker_running_is_docker_running_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/available-images/{image_name}": {
+            "get": {
+                "tags": [
+                    "Docker Management"
+                ],
+                "summary": "Available Images",
+                "operationId": "available_images_available_images__image_name__get",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Image Name"
+                        },
+                        "name": "image_name",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/active-containers": {
+            "get": {
+                "tags": [
+                    "Docker Management"
+                ],
+                "summary": "Active Containers",
+                "operationId": "active_containers_active_containers_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/exited-containers": {
+            "get": {
+                "tags": [
+                    "Docker Management"
+                ],
+                "summary": "Exited Containers",
+                "operationId": "exited_containers_exited_containers_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/clean-exited-containers": {
+            "post": {
+                "tags": [
+                    "Docker Management"
+                ],
+                "summary": "Clean Exited Containers",
+                "operationId": "clean_exited_containers_clean_exited_containers_post",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/remove-container/{container_name}": {
+            "post": {
+                "tags": [
+                    "Docker Management"
+                ],
+                "summary": "Remove Container",
+                "operationId": "remove_container_remove_container__container_name__post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Container Name"
+                        },
+                        "name": "container_name",
+                        "in": "path"
+                    },
+                    {
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "title": "Archive Locally",
+                            "default": true
+                        },
+                        "name": "archive_locally",
+                        "in": "query"
+                    },
+                    {
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "title": "S3 Bucket"
+                        },
+                        "name": "s3_bucket",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/stop-container/{container_name}": {
+            "post": {
+                "tags": [
+                    "Docker Management"
+                ],
+                "summary": "Stop Container",
+                "operationId": "stop_container_stop_container__container_name__post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Container Name"
+                        },
+                        "name": "container_name",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/start-container/{container_name}": {
+            "post": {
+                "tags": [
+                    "Docker Management"
+                ],
+                "summary": "Start Container",
+                "operationId": "start_container_start_container__container_name__post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Container Name"
+                        },
+                        "name": "container_name",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/create-hummingbot-instance": {
+            "post": {
+                "tags": [
+                    "Docker Management"
+                ],
+                "summary": "Create Hummingbot Instance",
+                "operationId": "create_hummingbot_instance_create_hummingbot_instance_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/HummingbotInstanceConfig"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/pull-image/": {
+            "post": {
+                "tags": [
+                    "Docker Management"
+                ],
+                "summary": "Pull Image",
+                "operationId": "pull_image_pull_image__post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ImageName"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/get-active-bots-status": {
+            "get": {
+                "tags": [
+                    "Manage Broker Messages"
+                ],
+                "summary": "Get Active Bots Status",
+                "description": "Returns the cached status of all active bots.",
+                "operationId": "get_active_bots_status_get_active_bots_status_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/get-bot-status/{bot_name}": {
+            "get": {
+                "tags": [
+                    "Manage Broker Messages"
+                ],
+                "summary": "Get Bot Status",
+                "operationId": "get_bot_status_get_bot_status__bot_name__get",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Bot Name"
+                        },
+                        "name": "bot_name",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/get-bot-history/{bot_name}": {
+            "get": {
+                "tags": [
+                    "Manage Broker Messages"
+                ],
+                "summary": "Get Bot History",
+                "operationId": "get_bot_history_get_bot_history__bot_name__get",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Bot Name"
+                        },
+                        "name": "bot_name",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/start-bot": {
+            "post": {
+                "tags": [
+                    "Manage Broker Messages"
+                ],
+                "summary": "Start Bot",
+                "operationId": "start_bot_start_bot_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StartBotAction"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/stop-bot": {
+            "post": {
+                "tags": [
+                    "Manage Broker Messages"
+                ],
+                "summary": "Stop Bot",
+                "operationId": "stop_bot_stop_bot_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StopBotAction"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/import-strategy": {
+            "post": {
+                "tags": [
+                    "Manage Broker Messages"
+                ],
+                "summary": "Import Strategy",
+                "operationId": "import_strategy_import_strategy_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ImportStrategyAction"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/list-scripts": {
+            "get": {
+                "tags": [
+                    "Files Management"
+                ],
+                "summary": "List Scripts",
+                "operationId": "list_scripts_list_scripts_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "type": "array",
+                                    "title": "Response List Scripts List Scripts Get"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/list-scripts-configs": {
+            "get": {
+                "tags": [
+                    "Files Management"
+                ],
+                "summary": "List Scripts Configs",
+                "operationId": "list_scripts_configs_list_scripts_configs_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "type": "array",
+                                    "title": "Response List Scripts Configs List Scripts Configs Get"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/script-config/{script_name}": {
+            "get": {
+                "tags": [
+                    "Files Management"
+                ],
+                "summary": "Get Script Config",
+                "description": "Retrieves the configuration parameters for a given script.\n:param script_name: The name of the script.\n:return: JSON containing the configuration parameters.",
+                "operationId": "get_script_config_script_config__script_name__get",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Script Name"
+                        },
+                        "name": "script_name",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "title": "Response Get Script Config Script Config  Script Name  Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/list-controllers": {
+            "get": {
+                "tags": [
+                    "Files Management"
+                ],
+                "summary": "List Controllers",
+                "operationId": "list_controllers_list_controllers_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "title": "Response List Controllers List Controllers Get"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/list-controllers-configs": {
+            "get": {
+                "tags": [
+                    "Files Management"
+                ],
+                "summary": "List Controllers Configs",
+                "operationId": "list_controllers_configs_list_controllers_configs_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "type": "array",
+                                    "title": "Response List Controllers Configs List Controllers Configs Get"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/controller-config/{controller_name}": {
+            "get": {
+                "tags": [
+                    "Files Management"
+                ],
+                "summary": "Get Controller Config",
+                "operationId": "get_controller_config_controller_config__controller_name__get",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Controller Name"
+                        },
+                        "name": "controller_name",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "title": "Response Get Controller Config Controller Config  Controller Name  Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/all-controller-configs": {
+            "get": {
+                "tags": [
+                    "Files Management"
+                ],
+                "summary": "Get All Controller Configs",
+                "operationId": "get_all_controller_configs_all_controller_configs_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "type": "object"
+                                    },
+                                    "type": "array",
+                                    "title": "Response Get All Controller Configs All Controller Configs Get"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/all-controller-configs/bot/{bot_name}": {
+            "get": {
+                "tags": [
+                    "Files Management"
+                ],
+                "summary": "Get All Controller Configs For Bot",
+                "operationId": "get_all_controller_configs_for_bot_all_controller_configs_bot__bot_name__get",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Bot Name"
+                        },
+                        "name": "bot_name",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "type": "object"
+                                    },
+                                    "type": "array",
+                                    "title": "Response Get All Controller Configs For Bot All Controller Configs Bot  Bot Name  Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/update-controller-config/bot/{bot_name}/{controller_id}": {
+            "post": {
+                "tags": [
+                    "Files Management"
+                ],
+                "summary": "Update Controller Config",
+                "operationId": "update_controller_config_update_controller_config_bot__bot_name___controller_id__post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Bot Name"
+                        },
+                        "name": "bot_name",
+                        "in": "path"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Controller Id"
+                        },
+                        "name": "controller_id",
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "title": "Config"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/add-script": {
+            "post": {
+                "tags": [
+                    "Files Management"
+                ],
+                "summary": "Add Script",
+                "operationId": "add_script_add_script_post",
+                "parameters": [
+                    {
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "title": "Override",
+                            "default": false
+                        },
+                        "name": "override",
+                        "in": "query"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Script"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/upload-script": {
+            "post": {
+                "tags": [
+                    "Files Management"
+                ],
+                "summary": "Upload Script",
+                "operationId": "upload_script_upload_script_post",
+                "parameters": [
+                    {
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "title": "Override",
+                            "default": false
+                        },
+                        "name": "override",
+                        "in": "query"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_upload_script_upload_script_post"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/add-script-config": {
+            "post": {
+                "tags": [
+                    "Files Management"
+                ],
+                "summary": "Add Script Config",
+                "operationId": "add_script_config_add_script_config_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ScriptConfig"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/upload-script-config": {
+            "post": {
+                "tags": [
+                    "Files Management"
+                ],
+                "summary": "Upload Script Config",
+                "operationId": "upload_script_config_upload_script_config_post",
+                "parameters": [
+                    {
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "title": "Override",
+                            "default": false
+                        },
+                        "name": "override",
+                        "in": "query"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_upload_script_config_upload_script_config_post"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/add-controller-config": {
+            "post": {
+                "tags": [
+                    "Files Management"
+                ],
+                "summary": "Add Controller Config",
+                "operationId": "add_controller_config_add_controller_config_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ScriptConfig"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/upload-controller-config": {
+            "post": {
+                "tags": [
+                    "Files Management"
+                ],
+                "summary": "Upload Controller Config",
+                "operationId": "upload_controller_config_upload_controller_config_post",
+                "parameters": [
+                    {
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "title": "Override",
+                            "default": false
+                        },
+                        "name": "override",
+                        "in": "query"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_upload_controller_config_upload_controller_config_post"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/delete-controller-config": {
+            "post": {
+                "tags": [
+                    "Files Management"
+                ],
+                "summary": "Delete Controller Config",
+                "operationId": "delete_controller_config_delete_controller_config_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Config Name"
+                        },
+                        "name": "config_name",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/delete-script-config": {
+            "post": {
+                "tags": [
+                    "Files Management"
+                ],
+                "summary": "Delete Script Config",
+                "operationId": "delete_script_config_delete_script_config_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Config Name"
+                        },
+                        "name": "config_name",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/delete-all-controller-configs": {
+            "post": {
+                "tags": [
+                    "Files Management"
+                ],
+                "summary": "Delete All Controller Configs",
+                "operationId": "delete_all_controller_configs_delete_all_controller_configs_post",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/delete-all-script-configs": {
+            "post": {
+                "tags": [
+                    "Files Management"
+                ],
+                "summary": "Delete All Script Configs",
+                "operationId": "delete_all_script_configs_delete_all_script_configs_post",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/real-time-candles": {
+            "post": {
+                "tags": [
+                    "Market Data"
+                ],
+                "summary": "Get Candles",
+                "operationId": "get_candles_real_time_candles_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CandlesConfig"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/historical-candles": {
+            "post": {
+                "tags": [
+                    "Market Data"
+                ],
+                "summary": "Get Historical Candles",
+                "operationId": "get_historical_candles_historical_candles_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/HistoricalCandlesConfig"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/run-backtesting": {
+            "post": {
+                "tags": [
+                    "Market Backtesting"
+                ],
+                "summary": "Run Backtesting",
+                "operationId": "run_backtesting_run_backtesting_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BacktestingConfig"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/list-databases": {
+            "post": {
+                "tags": [
+                    "Database Management"
+                ],
+                "summary": "List Databases",
+                "operationId": "list_databases_list_databases_post",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "type": "array",
+                                    "title": "Response List Databases List Databases Post"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/read-databases": {
+            "post": {
+                "tags": [
+                    "Database Management"
+                ],
+                "summary": "Read Databases",
+                "operationId": "read_databases_read_databases_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array",
+                                "title": "Db Paths"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "type": "object"
+                                    },
+                                    "type": "array",
+                                    "title": "Response Read Databases Read Databases Post"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/create-checkpoint": {
+            "post": {
+                "tags": [
+                    "Database Management"
+                ],
+                "summary": "Create Checkpoint",
+                "operationId": "create_checkpoint_create_checkpoint_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array",
+                                "title": "Db Paths"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "title": "Response Create Checkpoint Create Checkpoint Post"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/list-checkpoints": {
+            "post": {
+                "tags": [
+                    "Database Management"
+                ],
+                "summary": "List Checkpoints",
+                "operationId": "list_checkpoints_list_checkpoints_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "boolean",
+                            "title": "Full Path"
+                        },
+                        "name": "full_path",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "type": "array",
+                                    "title": "Response List Checkpoints List Checkpoints Post"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/load-checkpoint": {
+            "post": {
+                "tags": [
+                    "Database Management"
+                ],
+                "summary": "Load Checkpoint",
+                "operationId": "load_checkpoint_load_checkpoint_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Checkpoint Path"
+                        },
+                        "name": "checkpoint_path",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/get-performance-results": {
+            "post": {
+                "tags": [
+                    "Market Performance"
+                ],
+                "summary": "Get Performance Results",
+                "operationId": "get_performance_results_get_performance_results_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "title": "Payload"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/accounts-state": {
+            "get": {
+                "tags": [
+                    "Manage Credentials"
+                ],
+                "summary": "Get All Accounts State",
+                "operationId": "get_all_accounts_state_accounts_state_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "additionalProperties": {
+                                        "additionalProperties": {
+                                            "items": {
+                                                "type": "object"
+                                            },
+                                            "type": "array"
+                                        },
+                                        "type": "object"
+                                    },
+                                    "type": "object",
+                                    "title": "Response Get All Accounts State Accounts State Get"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/account-state-history": {
+            "get": {
+                "tags": [
+                    "Manage Credentials"
+                ],
+                "summary": "Get Account State History",
+                "description": "Get the historical state of all accounts.",
+                "operationId": "get_account_state_history_account_state_history_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "type": "object"
+                                    },
+                                    "type": "array",
+                                    "title": "Response Get Account State History Account State History Get"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/available-connectors": {
+            "get": {
+                "tags": [
+                    "Manage Credentials"
+                ],
+                "summary": "Available Connectors",
+                "operationId": "available_connectors_available_connectors_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "type": "array",
+                                    "title": "Response Available Connectors Available Connectors Get"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/connector-config-map/{connector_name}": {
+            "get": {
+                "tags": [
+                    "Manage Credentials"
+                ],
+                "summary": "Get Connector Config Map",
+                "operationId": "get_connector_config_map_connector_config_map__connector_name__get",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Connector Name"
+                        },
+                        "name": "connector_name",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "type": "array",
+                                    "title": "Response Get Connector Config Map Connector Config Map  Connector Name  Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/all-connectors-config-map": {
+            "get": {
+                "tags": [
+                    "Manage Credentials"
+                ],
+                "summary": "Get All Connectors Config Map",
+                "operationId": "get_all_connectors_config_map_all_connectors_config_map_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "additionalProperties": {
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "type": "array"
+                                    },
+                                    "type": "object",
+                                    "title": "Response Get All Connectors Config Map All Connectors Config Map Get"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/list-accounts": {
+            "get": {
+                "tags": [
+                    "Manage Credentials"
+                ],
+                "summary": "List Accounts",
+                "operationId": "list_accounts_list_accounts_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "type": "array",
+                                    "title": "Response List Accounts List Accounts Get"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/list-credentials/{account_name}": {
+            "get": {
+                "tags": [
+                    "Manage Credentials"
+                ],
+                "summary": "List Credentials",
+                "operationId": "list_credentials_list_credentials__account_name__get",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Account Name"
+                        },
+                        "name": "account_name",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "type": "array",
+                                    "title": "Response List Credentials List Credentials  Account Name  Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/add-account": {
+            "post": {
+                "tags": [
+                    "Manage Credentials"
+                ],
+                "summary": "Add Account",
+                "operationId": "add_account_add_account_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Account Name"
+                        },
+                        "name": "account_name",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/delete-account": {
+            "post": {
+                "tags": [
+                    "Manage Credentials"
+                ],
+                "summary": "Delete Account",
+                "operationId": "delete_account_delete_account_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Account Name"
+                        },
+                        "name": "account_name",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/delete-credential/{account_name}/{connector_name}": {
+            "post": {
+                "tags": [
+                    "Manage Credentials"
+                ],
+                "summary": "Delete Credential",
+                "operationId": "delete_credential_delete_credential__account_name___connector_name__post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Account Name"
+                        },
+                        "name": "account_name",
+                        "in": "path"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Connector Name"
+                        },
+                        "name": "connector_name",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        },
+        "/add-connector-keys/{account_name}/{connector_name}": {
+            "post": {
+                "tags": [
+                    "Manage Credentials"
+                ],
+                "summary": "Add Connector Keys",
+                "operationId": "add_connector_keys_add_connector_keys__account_name___connector_name__post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Account Name"
+                        },
+                        "name": "account_name",
+                        "in": "path"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Connector Name"
+                        },
+                        "name": "connector_name",
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "title": "Keys"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBasic": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "BacktestingConfig": {
+                "properties": {
+                    "start_time": {
+                        "type": "integer",
+                        "title": "Start Time",
+                        "default": 1672542000
+                    },
+                    "end_time": {
+                        "type": "integer",
+                        "title": "End Time",
+                        "default": 1672628400
+                    },
+                    "backtesting_resolution": {
+                        "type": "string",
+                        "title": "Backtesting Resolution",
+                        "default": "1m"
+                    },
+                    "trade_cost": {
+                        "type": "number",
+                        "title": "Trade Cost",
+                        "default": 0.0006
+                    },
+                    "config": {
+                        "anyOf": [
+                            {
+                                "type": "object"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ],
+                        "title": "Config"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "config"
+                ],
+                "title": "BacktestingConfig"
+            },
+            "Body_upload_controller_config_upload_controller_config_post": {
+                "properties": {
+                    "config_file": {
+                        "type": "string",
+                        "format": "binary",
+                        "title": "Config File"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "config_file"
+                ],
+                "title": "Body_upload_controller_config_upload_controller_config_post"
+            },
+            "Body_upload_script_config_upload_script_config_post": {
+                "properties": {
+                    "config_file": {
+                        "type": "string",
+                        "format": "binary",
+                        "title": "Config File"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "config_file"
+                ],
+                "title": "Body_upload_script_config_upload_script_config_post"
+            },
+            "Body_upload_script_upload_script_post": {
+                "properties": {
+                    "config_file": {
+                        "type": "string",
+                        "format": "binary",
+                        "title": "Config File"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "config_file"
+                ],
+                "title": "Body_upload_script_upload_script_post"
+            },
+            "CandlesConfig": {
+                "properties": {
+                    "connector": {
+                        "type": "string",
+                        "title": "Connector"
+                    },
+                    "trading_pair": {
+                        "type": "string",
+                        "title": "Trading Pair"
+                    },
+                    "interval": {
+                        "type": "string",
+                        "title": "Interval",
+                        "default": "1m"
+                    },
+                    "max_records": {
+                        "type": "integer",
+                        "title": "Max Records",
+                        "default": 500
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "connector",
+                    "trading_pair"
+                ],
+                "title": "CandlesConfig",
+                "description": "The CandlesConfig class is a data class that stores the configuration of a Candle object.\nIt has the following attributes:\n- connector: str\n- trading_pair: str\n- interval: str\n- max_records: int"
+            },
+            "HTTPValidationError": {
+                "properties": {
+                    "detail": {
+                        "items": {
+                            "$ref": "#/components/schemas/ValidationError"
+                        },
+                        "type": "array",
+                        "title": "Detail"
+                    }
+                },
+                "type": "object",
+                "title": "HTTPValidationError"
+            },
+            "HistoricalCandlesConfig": {
+                "properties": {
+                    "connector_name": {
+                        "type": "string",
+                        "title": "Connector Name",
+                        "default": "binance_perpetual"
+                    },
+                    "trading_pair": {
+                        "type": "string",
+                        "title": "Trading Pair",
+                        "default": "BTC-USDT"
+                    },
+                    "interval": {
+                        "type": "string",
+                        "title": "Interval",
+                        "default": "3m"
+                    },
+                    "start_time": {
+                        "type": "integer",
+                        "title": "Start Time",
+                        "default": 1672542000
+                    },
+                    "end_time": {
+                        "type": "integer",
+                        "title": "End Time",
+                        "default": 1672628400
+                    }
+                },
+                "type": "object",
+                "title": "HistoricalCandlesConfig"
+            },
+            "HummingbotInstanceConfig": {
+                "properties": {
+                    "instance_name": {
+                        "type": "string",
+                        "title": "Instance Name"
+                    },
+                    "credentials_profile": {
+                        "type": "string",
+                        "title": "Credentials Profile"
+                    },
+                    "image": {
+                        "type": "string",
+                        "title": "Image",
+                        "default": "hummingbot/hummingbot:latest"
+                    },
+                    "script": {
+                        "type": "string",
+                        "title": "Script"
+                    },
+                    "script_config": {
+                        "type": "string",
+                        "title": "Script Config"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "instance_name",
+                    "credentials_profile"
+                ],
+                "title": "HummingbotInstanceConfig"
+            },
+            "ImageName": {
+                "properties": {
+                    "image_name": {
+                        "type": "string",
+                        "title": "Image Name"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "image_name"
+                ],
+                "title": "ImageName"
+            },
+            "ImportStrategyAction": {
+                "properties": {
+                    "bot_name": {
+                        "type": "string",
+                        "title": "Bot Name"
+                    },
+                    "strategy": {
+                        "type": "string",
+                        "title": "Strategy"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "bot_name",
+                    "strategy"
+                ],
+                "title": "ImportStrategyAction"
+            },
+            "Script": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "content": {
+                        "type": "string",
+                        "title": "Content"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name",
+                    "content"
+                ],
+                "title": "Script"
+            },
+            "ScriptConfig": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "content": {
+                        "type": "object",
+                        "title": "Content"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name",
+                    "content"
+                ],
+                "title": "ScriptConfig"
+            },
+            "StartBotAction": {
+                "properties": {
+                    "bot_name": {
+                        "type": "string",
+                        "title": "Bot Name"
+                    },
+                    "log_level": {
+                        "type": "string",
+                        "title": "Log Level"
+                    },
+                    "script": {
+                        "type": "string",
+                        "title": "Script"
+                    },
+                    "conf": {
+                        "type": "string",
+                        "title": "Conf"
+                    },
+                    "async_backend": {
+                        "type": "boolean",
+                        "title": "Async Backend",
+                        "default": false
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "bot_name"
+                ],
+                "title": "StartBotAction"
+            },
+            "StopBotAction": {
+                "properties": {
+                    "bot_name": {
+                        "type": "string",
+                        "title": "Bot Name"
+                    },
+                    "skip_order_cancellation": {
+                        "type": "boolean",
+                        "title": "Skip Order Cancellation",
+                        "default": false
+                    },
+                    "async_backend": {
+                        "type": "boolean",
+                        "title": "Async Backend",
+                        "default": false
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "bot_name"
+                ],
+                "title": "StopBotAction"
+            },
+            "ValidationError": {
+                "properties": {
+                    "loc": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "integer"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "Location"
+                    },
+                    "msg": {
+                        "type": "string",
+                        "title": "Message"
+                    },
+                    "type": {
+                        "type": "string",
+                        "title": "Error Type"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "loc",
+                    "msg",
+                    "type"
+                ],
+                "title": "ValidationError"
+            }
+        },
+        "securitySchemes": {
+            "HTTPBasic": {
+                "type": "http",
+                "scheme": "basic"
+            }
+        }
+    }
+}

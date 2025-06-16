@@ -1,0 +1,19 @@
+name: backend-api
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.12
+  - fastapi
+  - uvicorn
+  - boto3
+  - libcxx
+  - python-dotenv
+  - docker-py
+  - pip
+  - pip:
+      - hummingbot
+      - git+https://github.com/hummingbot/hbot-remote-client-py.git
+      - flake8
+      - isort
+      - pre-commit
